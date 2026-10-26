@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bartissk1</title>
+<meta name="description" content="颜色是数据，不是装饰。">
+<style>
+:root{
+  --bg:#0b0e14; --fg:#e6edf3; --muted:#8b949e; --line:#1f2630;
+  --card:#11161f; --accent:#7ee787; --accent2:#79c0ff;
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#fbfbfa; --fg:#1a1a1a; --muted:#6b6b6b; --line:#e6e4e0;
+         --card:#ffffff; --accent:#1a7f37; --accent2:#0969da; }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC","PingFang SC",
+              "Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:16px; line-height:1.78; letter-spacing:.01em;
+}
+main{max-width:720px; margin:0 auto; padding:88px 24px 120px}
+h1,h2,h3{line-height:1.3; letter-spacing:-.01em}
+a{color:var(--accent2); text-decoration:none; border-bottom:1px solid transparent}
+a:hover{border-bottom-color:var(--accent2)}
+
+.hero{padding-bottom:44px; border-bottom:1px solid var(--line)}
+.eyebrow{margin:0 0 14px; font-size:13px; color:var(--muted);
+         letter-spacing:.14em; text-transform:uppercase}
+.hero h1{margin:0; font-size:40px; font-weight:650}
+.tagline{margin:16px 0 0; font-size:18px; color:var(--muted); max-width:34em}
+
+section{padding:44px 0; border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:0}
+h2{margin:0 0 22px; font-size:13px; font-weight:600; letter-spacing:.14em;
+   text-transform:uppercase; color:var(--muted)}
+
+.about p{margin:0 0 18px; font-size:17px}
+ul.traits{list-style:none; margin:0; padding:0; display:grid; gap:10px}
+ul.traits li{padding-left:20px; position:relative; color:var(--fg)}
+ul.traits li::before{content:""; position:absolute; left:2px; top:.72em;
+  width:7px; height:1px; background:var(--accent)}
+
+.grid{display:grid; gap:14px}
+@media(min-width:640px){ .grid.two{grid-template-columns:1fr 1fr} }
+.card{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:20px}
+.card h3{margin:0 0 8px; font-size:17px; font-weight:600}
+.card p{margin:0; color:var(--muted); font-size:15px}
+.card .status{display:inline-block; margin-top:12px; font-size:12px;
+  color:var(--accent); letter-spacing:.06em}
+
+ul.repos{list-style:none; margin:0; padding:0}
+ul.repos li{padding:16px 0; border-bottom:1px dashed var(--line)}
+ul.repos li:last-child{border-bottom:0}
+ul.repos .name{font-weight:600}
+ul.repos .desc{color:var(--muted); font-size:15px; margin-top:2px}
+
+.tags{display:flex; flex-wrap:wrap; gap:8px; margin:0; padding:0; list-style:none}
+.tags li{border:1px solid var(--line); border-radius:999px;
+  padding:6px 14px; font-size:14px; color:var(--muted)}
+
+ol.timeline{list-style:none; margin:0; padding:0 0 0 20px;
+  border-left:1px solid var(--line)}
+ol.timeline li{position:relative; padding:0 0 26px 20px}
+ol.timeline li:last-child{padding-bottom:0}
+ol.timeline li::before{content:""; position:absolute; left:-25px; top:.62em;
+  width:9px; height:9px; border-radius:50%; background:var(--bg);
+  border:1px solid var(--accent)}
+ol.timeline .when{display:block; font-size:12px; color:var(--muted);
+  letter-spacing:.08em; margin-bottom:2px}
+
+footer{padding-top:44px; border-top:1px solid var(--line); margin-top:44px}
+footer .mission{margin:0 0 10px; font-size:17px}
+footer .note{margin:0; color:var(--muted); font-size:14px}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+  <p class="eyebrow">终端输出 · 转义序列</p>
+  <h1>bartissk1</h1>
+  <p class="tagline">颜色是数据，不是装饰。</p>
+</header>
+
+<section class="about" id="about">
+  <h2>关于</h2>
+  <p>我是 bartissk1。经常遇到这样的情况：把 CI 的日志捞下来想搜一个错误码， 结果搜不到——因为那行字被一串颜色码切成了好几段，肉眼却看起来是连着的。 于是有了 ansipeek：它把一段输出里的转义序列逐个列出来， 告诉你每个序列是什么含义、对应哪段文字，然后把纯文本还原出来。 我对它的期待很朴素——被颜色切碎的内容，应该还能被搜索、被比较、被统计。 工具会还原颜色码对应的字符，但不会替颜色本身做任何审美判断。</p>
+  <ul class="traits">
+    <li>先还原，再评价：颜色码影响内容时，内容优先。</li>
+    <li>每个转义序列都说明含义，不只做删除。</li>
+    <li>输出要能进管道，退出码要能区分「没找到」和「解析失败」。</li>
+    <li>统计就是统计，不加主观评价。</li>
+  </ul>
+</section>
+
+<section id="research">
+  <h2>研究方向</h2>
+  <div class="grid two">
+    <article class="card">
+      <h3>终端序列的实际覆盖面</h3>
+      <p>真实工具输出里，到底用到了哪几类转义序列？</p>
+      <span class="status">持续观察</span>
+    </article>
+    <article class="card">
+      <h3>带色文本的可比较性</h3>
+      <p>两份输出除了颜色以外完全一致时，怎么自动确认这件事？</p>
+      <span class="status">在做工具</span>
+    </article>
+    <article class="card">
+      <h3>不可见字符的可见化</h3>
+      <p>有没有一种表示方式，能让人一眼看出文本里混进了什么控制字符？</p>
+      <span class="status">长期思考</span>
+    </article>
+  </div>
+</section>
+
+<section id="work">
+  <h2>开源</h2>
+  <ul class="repos">
+    <li><div class="name">ansipeek</div>
+      <div class="desc">逐条说明转义序列的类型与含义，并把纯文本还原出来。</div>
+    </li>
+  </ul>
+</section>
+
+<section id="hobbies">
+  <h2>业余</h2>
+  <ul class="tags">
+    <li>收集各种工具输出的彩色日志样本</li>
+    <li>把带颜色的终端输出转成能直接 diff 的纯文本</li>
+    <li>读终端模拟器里关于序列处理的实现说明</li>
+  </ul>
+</section>
+
+<section id="timeline">
+  <h2>时间线</h2>
+  <ol class="timeline">
+    <li>
+      <span class="when">2026-10-21</span>
+      注册 GitHub 账号。
+    </li>
+    <li>
+      <span class="when">2026-10-26</span>
+      开源 ansipeek，用于解析终端输出里的 ANSI 转义序列并还原纯文本。
+    </li>
+  </ol>
+</section>
+
+<footer>
+  <p class="mission">让被颜色切碎的内容，重新变成可搜索、可比较的文本。</p>
+  <p class="note">这个页面在生长。每一次真实的提交都会被记下来。</p>
+</footer>
+
+</main>
+</body>
+</html>
